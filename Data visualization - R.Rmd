@@ -1,0 +1,105 @@
+---
+title: "Untitled"
+author: "Mega Restu Utari"
+date: "19/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+**LOAD DATA**
+
+```{r}
+data <- readRDS(file = "F:/KERJA/R/Dibimbing Batch 8/epi_data_1.rds")
+```
+
+**No. 1**
+
+```{r}
+View(data)
+```
+
+```{r}
+data <- data[!is.na(data$gender),]
+
+```
+
+```{r}
+data %>% 
+  group_by(gender)%>% 
+  ggplot(aes(
+    x = age, 
+    y = wt_kg,
+    color=gender
+  )) + 
+  geom_point() +
+  geom_smooth(method = "gam")+
+  labs(x = "Weight in kg", y = "Age")
+```
+
+**No. 2**
+
+```{r}
+Data2 <- readRDS(file = "F:/KERJA/R/Dibimbing Batch 8/epi_data_2.rds")
+```
+
+```{r}
+Data2 <- as_tibble(Data2)
+Data2
+```
+
+
+```{r}
+names(Data2)[names(Data2) == "malaria_rdt_0-4"] <- "0-4"
+names(Data2)[names(Data2) == "malaria_rdt_5-14"] <- "5-14"
+names(Data2)[names(Data2) == "malaria_rdt_15"] <- "15"
+Data2
+```
+
+
+```{r}
+dat_long <- Data2 %>%
+  pivot_longer("0-4":"15", names_to = "Cases")
+```
+
+```{r}
+data_long <- dat_long[!is.na(dat_long$Cases),]
+```
+
+```{r}
+data_long
+
+```
+
+```{r}
+data_long %>% 
+  ggplot(aes(
+    x = malaria_tot
+  )) + 
+  geom_histogram() +
+  scale_x_log10()
+```
+
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+dat_long %>% 
+  ggplot(aes(x=data_date, fill = Cases)) + 
+  geom_histogram(bins=800,binwidth=2, colour = "Red")+ 
+  facet_grid(District ~ Cases) +
+  scale_fill_manual(values = c("0-4" = "Red", "5-14" = "Red", "15" = "Red"))+
+  labs(x = "Data of Report", y = "Malaria Cases")
+  #ylim(0,700)
+```
+
+
+
