@@ -16,7 +16,7 @@ library(tidyverse)
 **LOAD DATA**
 
 ```{r}
-data <- readRDS(file = "F:/KERJA/R/Dibimbing Batch 8/epi_data_1.rds")
+data <- readRDS(file = "epi_data_1.rds")
 ```
 
 **No. 1**
@@ -46,7 +46,7 @@ data %>%
 **No. 2**
 
 ```{r}
-Data2 <- readRDS(file = "F:/KERJA/R/Dibimbing Batch 8/epi_data_2.rds")
+Data2 <- readRDS(file = "epi_data_2.rds")
 ```
 
 ```{r}
